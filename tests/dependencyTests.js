@@ -104,13 +104,13 @@ for (let i = 0; i <= 8192; i += 512) {
 
 // Easy fill soft shell data
 let cnsoftshellDatav1 = []
-for (let i = 0; i <= 8192; i += 512) {
+for (i = 0; i <= 8192; i += 512) {
   cnsoftshellDatav1.push({ height: i, hash: multiHashing['cryptonight-soft-shell'](xmrigdata, 1, i) })
 }
 
 // Easy fill soft shell data
 let cnsoftshellDatav2 = []
-for (let i = 0; i <= 8192; i += 512) {
+for (i = 0; i <= 8192; i += 512) {
   cnsoftshellDatav2.push({ height: i, hash: multiHashing['cryptonight-soft-shell'](xmrigdata, 2, i) })
 }
 
@@ -164,22 +164,22 @@ assert.deepEqual(cnturtleliteletiant2Data, xmrigcnturtleliteletiant2hash)
 let count = 20
 console.log('')
 
-for (let i = 0; i < cnsoftshellDatav0.length; i++) {
+for (i = 0; i < cnsoftshellDatav0.length; i++) {
   console.log('[#' + count + '] Cryptonight Soft Shell v0 (' + cnsoftshellDatav0[i].height + '): ', cnsoftshellDatav0[i].hash.toString('hex'))
   count++
 }
 
-for (let i = 0; i < cnsoftshellDatav0.length; i++) {
+for (i = 0; i < cnsoftshellDatav0.length; i++) {
   assert.deepEqual(cnsoftshellDatav0[i].hash, cnsoftshellHashv0[i])
 }
 
 console.log('')
-for (let i = 0; i < cnsoftshellDatav1.length; i++) {
+for (i = 0; i < cnsoftshellDatav1.length; i++) {
   console.log('[#' + count + '] Cryptonight Soft Shell v1 (' + cnsoftshellDatav1[i].height + '): ', cnsoftshellDatav1[i].hash.toString('hex'))
   count++
 }
 
-for (let i = 0; i < cnsoftshellDatav1.length; i++) {
+for (i = 0; i < cnsoftshellDatav1.length; i++) {
   assert.deepEqual(cnsoftshellDatav1[i].hash, cnsoftshellHashv1[i])
 }
 
@@ -188,7 +188,7 @@ for (let i = 0; i < cnsoftshellDatav1.length; i++) {
 
 
 console.log('')
-for (let i = 0; i < cnsoftshellDatav2.length; i++) {
+for (i = 0; i < cnsoftshellDatav2.length; i++) {
   console.log('[#' + count + '] Cryptonight Soft Shell v2 (' + cnsoftshellDatav2[i].height + '): ', cnsoftshellDatav2[i].hash.toString('hex'))
   count++
 }
@@ -199,7 +199,7 @@ for (let i = 0; i < cnsoftshellDatav2.length; i++) {
 let validAddressPrefix = 3914525
 let address = new Buffer.from('TRTLuxN6FVALYxeAEKhtWDYNS9Vd9dHVp3QHwjKbo76ggQKgUfVjQp8iPypECCy3MwZVyu89k1fWE2Ji6EKedbrqECHHWouZN6g')
 
-let addressPrefix = cnUtil.address_decode(address)
+let addressPrefix = cnUtil.adress_decode(address)
 
 console.log('')
 console.log('')
