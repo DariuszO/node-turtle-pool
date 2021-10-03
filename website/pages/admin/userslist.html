@@ -19,11 +19,11 @@
 
 <script>
 	function parseUsers(wallets) {
-		var walletsArray = [],
+		let walletsArray = [],
 			properObject = {};
-		for(var wallet in wallets) {
+		for(let wallet in wallets) {
 			if(wallets.hasOwnProperty(wallet)) {
-				var userData = wallets[wallet];
+				let userData = wallets[wallet];
 				walletsArray.push({
 					number: wallet,
 					wallet: userData,

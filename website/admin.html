@@ -78,7 +78,7 @@
 		});
 	});
 
-	var docCookies = {
+	let docCookies = {
 		getItem: function(sKey) {
 			return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
 		},
@@ -86,7 +86,7 @@
 			if(!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
 				return false;
 			}
-			var sExpires = "";
+			let sExpires = "";
 			if(vEnd) {
 				switch(vEnd.constructor) {
 					case Number:
@@ -121,8 +121,8 @@
 
 	function getReadableHashRateString(hashrate) {
 		hashrate = hashrate || 0;
-		var i = 0;
-		var byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
+		let i = 0;
+		let byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
 		while(hashrate > 1000) {
 			hashrate = hashrate / 1000;
 			i++;
@@ -153,7 +153,7 @@
 
 	// init Handlebars template
 	function renderTemplate(usersData, templateId, view) {
-		var source = $(templateId).html(),
+		let source = $(templateId).html(),
 			template = Handlebars.compile(source),
 			context = usersData,
 			html = template(context);
@@ -161,20 +161,20 @@
 	}
 
 	function sortTable() {
-		var table = $(this).parents('table').eq(0),
+		let table = $(this).parents('table').eq(0),
 			rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
 		this.asc = !this.asc;
 		if(!this.asc) {
 			rows = rows.reverse()
 		}
-		for(var i = 0; i < rows.length; i++) {
+		for(let i = 0; i < rows.length; i++) {
 			table.append(rows[i])
 		}
 	}
 
 	function comparer(index) {
 		return function(a, b) {
-			var valA = getCellValue(a, index), valB = getCellValue(b, index);
+			let valA = getCellValue(a, index), valB = getCellValue(b, index);
 			return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
 		}
 	}
@@ -183,8 +183,8 @@
 		return $(row).children('td').eq(index).data("sort")
 	}
 
-	var currentPage;
-	var xhrPageLoading;
+	let currentPage;
+	let xhrPageLoading;
 	function routePage(loadedCallback) {
 
 		if(currentPage && currentPage.destroy) {
@@ -198,10 +198,10 @@
 		}
 
 		$('.hot_link').removeClass('active');
-		var $link = $('a.hot_link[href="' + (window.location.hash || '#') + '"]');
+		let $link = $('a.hot_link[href="' + (window.location.hash || '#') + '"]');
 
 		$link.addClass('active');
-		var page = $link.data('page');
+		let page = $link.data('page');
 
 		xhrPageLoading = $.ajax({
 			url: 'pages/' + page,

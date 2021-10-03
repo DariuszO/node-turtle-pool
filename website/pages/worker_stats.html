@@ -1,7 +1,7 @@
 
 <script>
 function loadScript(url, callback){
-  var script = document.createElement("script")
+  let script = document.createElement("script")
     script.type = "text/javascript";
   if (script.readyState){  //IE
     script.onreadystatechange = function(){
@@ -29,15 +29,15 @@ function fetchAddressWorkers(address) {
     dataType: 'json',
     cache: 'false',
     success: function(data){
-      for (var i=0; i<data.workers.length; i++) {
+      for (let i=0; i<data.workers.length; i++) {
         getWorkerGraphData(data.workers[i], address, function(graphData, rangeMax) {
-          var new_id = 'chart_' + graphData[0].name;
-          var $template = $("#worker_chart").clone().prop('id', new_id);
+          let new_id = 'chart_' + graphData[0].name;
+          let $template = $("#worker_chart").clone().prop('id', new_id);
           if (graphData[0].y.length < 5) {
             $template.append('<br>Not enough data yet for worker: ' + graphData[0].name);
             $template.appendTo("#graphs");
           } else {
-            var layout = {
+            let layout = {
               title: 'Hashrate worker: ' + graphData[0].name,
               autosize: false,
               width: 1000,
@@ -59,7 +59,7 @@ function fetchAddressWorkers(address) {
 }
 // Gets worker graph data.
 function getWorkerGraphData(worker, address, dataHandler) {
-  var worker_address = address + '+' + worker;
+  let worker_address = address + '+' + worker;
   $.ajax({
     url: api + '/stats_worker',
     data: {
@@ -68,12 +68,12 @@ function getWorkerGraphData(worker, address, dataHandler) {
     dataType: 'json',
     cache: 'false',
     success: function(data){
-      var graphData = {
+      let graphData = {
         names: [],
         values: []
       };
-      var rangeMax = 0;
-      for (var i = 0; i< data['charts']['hashrate'].length; i++) {
+      let rangeMax = 0;
+      for (let i = 0; i< data['charts']['hashrate'].length; i++) {
         xy = data['charts']['hashrate'][i];
         graphData.names.push(new Date(xy[0]*1000).toUTCString());
         if (xy[1] > rangeMax) {
@@ -122,8 +122,8 @@ meaningful data depending on pool settings.</p>
 
 <script>
 loadScript("https://cdn.plot.ly/plotly-1.2.0.min.js", function() {
-var urlWalletAddress = location.search.split('wallet=')[1] || 0;
-var address = urlWalletAddress || docCookies.getItem('mining_address');
+let urlWalletAddress = location.search.split('wallet=')[1] || 0;
+let address = urlWalletAddress || docCookies.getItem('mining_address');
 if (address) {
 	$('#yourAddress').val(address);
 	fetchAddressWorkers(address);
@@ -131,7 +131,7 @@ if (address) {
 });
 $('#addressSetButton').click(function(){
   $("#graphs").empty();
-  var address = $('#yourAddress').val();
+  let address = $('#yourAddress').val();
   fetchAddressWorkers(address);
 });
 </script>

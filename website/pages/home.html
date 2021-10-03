@@ -151,7 +151,7 @@
     </div>    
 
     <script>
-        var currencyGraphStat = {
+        let currencyGraphStat = {
             type: 'line',
             width: '100%',
             height: '75',
@@ -167,7 +167,7 @@
             tooltipFormat: '<b>{{y}}</b>, {{offset:names}}'
         };
 
-        var userGraphStat = {
+        let userGraphStat = {
 	        hashrate: {
 		        type: 'line',
 		        width: '100%',
@@ -323,7 +323,7 @@
             if (xhrAddressPoll) xhrAddressPoll.abort();
             if (addressTimeout) clearTimeout(addressTimeout);
             clearInterval(intervalMarketPolling);
-            for (var marketPoll in xhrMarketGets){
+            for (let marketPoll in xhrMarketGets){
                 xhrMarketGets[marketPoll].abort();
             }
             if (xhrGetPayments) xhrGetPayments.abort();
@@ -343,7 +343,7 @@
             updateText('poolHashrate', getReadableHashRateString(lastStats.pool.hashrate) + '/sec');
 
             if (lastStats.pool.lastBlockFound){
-                var d = new Date(parseInt(lastStats.pool.lastBlockFound)).toISOString();
+                let d = new Date(parseInt(lastStats.pool.lastBlockFound)).toISOString();
                 $('#poolLastBlockFound').timeago('update', d);
             }
             else
@@ -353,10 +353,10 @@
             updateText('poolMiners', lastStats.pool.miners.toString());
 
 
-            var totalFee = lastStats.config.fee;
+            let totalFee = lastStats.config.fee;
             if (Object.keys(lastStats.config.donation).length) {
-                var totalDonation = 0;
-                for(var i in lastStats.config.donation) {
+                let totalDonation = 0;
+                for(let i in lastStats.config.donation) {
                     totalDonation += lastStats.config.donation[i];
                 }
                 totalFee += totalDonation;
@@ -381,16 +381,16 @@
 
     function getReadableTime(seconds){
 
-        var units = [ [60, 'second'], [60, 'minute'], [24, 'hour'],
+        let units = [ [60, 'second'], [60, 'minute'], [24, 'hour'],
             [7, 'day'], [4, 'week'], [12, 'month'], [1, 'year'] ];
 
         function formatAmounts(amount, unit){
-            var rounded = Math.round(amount);
+            let rounded = Math.round(amount);
             return '' + rounded + ' ' + unit + (rounded > 1 ? 's' : '');
         }
 
-        var amount = seconds;
-        for (var i = 0; i < units.length; i++){
+        let amount = seconds;
+        for (let i = 0; i < units.length; i++){
             if (amount < units[i][0])
                 return formatAmounts(amount, units[i][1]);
             amount = amount / units[i][0];
@@ -403,13 +403,13 @@
 
     /* Market data polling */
 
-    var intervalMarketPolling = setInterval(updateMarkets, 300000); //poll market data every 5 minutes
-    var xhrMarketGets = {};
+    let intervalMarketPolling = setInterval(updateMarkets, 300000); //poll market data every 5 minutes
+    let xhrMarketGets = {};
     updateMarkets();
     function updateMarkets(){
-        var completedFetches = 0;
-        var marketsData = [];
-        for (var i = 0; i < cryptonatorWidget.length; i++){
+        let completedFetches = 0;
+        let marketsData = [];
+        for (let i = 0; i < cryptonatorWidget.length; i++){
             (function(i){
                 cryptonatorWidget[i] = cryptonatorWidget[i].replace('{symbol}', lastStats.config.symbol.toLowerCase());
                 xhrMarketGets[cryptonatorWidget[i]] = $.get('https://api.cryptonator.com/api/ticker/' + cryptonatorWidget[i], function(data){
@@ -422,10 +422,10 @@
                     completedFetches++;
                     if (completedFetches !== cryptonatorWidget.length) return;
 
-                    var $marketHeader = $('#marketHeader');
+                    let $marketHeader = $('#marketHeader');
                     $('.marketTicker').remove();
-                    for (var f = marketsData.length - 1; f >= 0 ; f--){
-                        var price = parseFloat(marketsData[f].ticker.price);
+                    for (let f = marketsData.length - 1; f >= 0 ; f--){
+                        let price = parseFloat(marketsData[f].ticker.price);
 
                         if (price > 1) price = Math.round(price * 100) / 100;
                         else price = marketsData[f].ticker.price;
@@ -454,9 +454,9 @@
 
     function calcEstimateProfit(){
         try {
-            var rateUnit = Math.pow(1024,parseInt($('#calcHashUnit').data('mul')));
-            var hashRate = parseFloat($('#calcHashRate').val()) * rateUnit;
-            var profit = (hashRate * 86400 / lastStats.network.difficulty) * lastStats.network.reward;
+            let rateUnit = Math.pow(1024,parseInt($('#calcHashUnit').data('mul')));
+            let hashRate = parseFloat($('#calcHashRate').val()) * rateUnit;
+            let profit = (hashRate * 86400 / lastStats.network.difficulty) * lastStats.network.reward;
             if (profit) {
                 updateText('calcHashAmount', getReadableCoins(profit, 2, true));
                 return;
@@ -499,8 +499,8 @@
     }
 	
 	$('#payoutSetButton').click(function(){
-        var address = $('#yourStatsInput').val();
-        var level = $('#yourPayoutRate').val();
+        let address = $('#yourStatsInput').val();
+        let level = $('#yourPayoutRate').val();
         setPayoutLevel(address, level);
     });
 
@@ -518,12 +518,12 @@
                 '<td>' + payment.mixin + '</td>';
     }
 
-    var xhrAddressPoll;
-    var addressTimeout;
+    let xhrAddressPoll;
+    let addressTimeout;
 
     $('#lookUp').click(function(){
 
-        var address = $('#yourStatsInput').val().trim();
+        let address = $('#yourStatsInput').val().trim();
         if (!address){
             $('#yourStatsInput').focus();
             return;
@@ -612,16 +612,16 @@
         fetchAddressStats(false);
     });
     
-    var urlWalletAddress = location.search.split('wallet=')[1] || 0;
+    let urlWalletAddress = location.search.split('wallet=')[1] || 0;
 
-    var address = urlWalletAddress || docCookies.getItem('mining_address');
+    let address = urlWalletAddress || docCookies.getItem('mining_address');
 
-    var xhrRenderUserCharts;
+    let xhrRenderUserCharts;
 
     function createUserCharts(data) {
-	    for(var chart in userGraphStat) {
+	    for(let chart in userGraphStat) {
 		    if(data['charts'][chart] && data['charts'][chart].length) {
-			    var graphData = getGraphData(data['charts'][chart], chart == 'payments');
+			    let graphData = getGraphData(data['charts'][chart], chart == 'payments');
 			    userGraphStat[chart].tooltipValueLookups = {names: graphData.names};
 			    $('[data-chart=user_' + chart + ']').show().find('.chart').sparkline(graphData.values, userGraphStat[chart]);
 		    }
@@ -639,7 +639,7 @@
             $('#lookUp').click();
     });
 
-    var xhrGetPayments;
+    let xhrGetPayments;
     $('#loadMorePayments').click(function(){
         if (xhrGetPayments) xhrGetPayments.abort();
         xhrGetPayments = $.ajax({
@@ -661,12 +661,12 @@
     /* Show stats of the currency */
 
     function getGraphData (rawData, fixValueToCoins) {
-        var graphData = {
+        let graphData = {
             names: [],
             values: []
         };
         if(rawData) {
-            for (var i = 0, xy; xy = rawData[i]; i++) {
+            for (let i = 0, xy; xy = rawData[i]; i++) {
                 graphData.names.push(new Date(xy[0]*1000).toUTCString());
                 graphData.values.push(fixValueToCoins ? getReadableCoins(xy[1], 4, true) : xy[1]);
             }
@@ -678,7 +678,7 @@
 
     function createCharts(data) {         
         if (data.hasOwnProperty("charts")) {
-    	    var graphData = {
+    	    let graphData = {
     		    profit: getGraphData(data.charts.profit),
     		    diff: getGraphData(data.charts.difficulty),
     		    hashrate: getGraphData(data.charts.hashrate),
@@ -686,11 +686,11 @@
     		    workers: getGraphData(data.charts.workers)
     	    };
             
-    	    for(var graphType in graphData) {
+    	    for(let graphType in graphData) {
     		    if(graphData[graphType].values.length > 1) {
-                    var settings = jQuery.extend({}, currencyGraphStat);
+                    let settings = jQuery.extend({}, currencyGraphStat);
                     settings.tooltipValueLookups = {names: graphData[graphType].names};
-			        var $chart = $('[data-chart=' + graphType + '] .chart');
+			        let $chart = $('[data-chart=' + graphType + '] .chart');
 			        $chart.closest('.chartWrap').show();
 			        $chart.sparkline(graphData[graphType].values, settings);
     		    }
@@ -715,12 +715,12 @@
         // Get the values from charts data.
         
         if (stats.hasOwnProperty('charts')) {
-            var priceData = stats.charts.price;
+            let priceData = stats.charts.price;
             $('#cur_price').text(priceData ? priceData[priceData.length-1][1] : '---'); 
         }
         if (stats.hasOwnProperty('charts')) {
-            var profitValue;
-            var profitData = stats.charts.profit;
+            let profitValue;
+            let profitData = stats.charts.profit;
 
             if (profitData) {
                 profitValue = profitData[profitData.length-1][1];
@@ -741,7 +741,7 @@
 
 
     
-    var xhrRenderCharts;
+    let xhrRenderCharts;
 
     $(function(){
         xhrRenderCharts = $.ajax({

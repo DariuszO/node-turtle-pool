@@ -461,31 +461,31 @@ Variable explanations:
 ```javascript
 
 /* Must point to the API setup in your config.json file. */
-var api = "http://poolhost:8117";
+let api = "http://poolhost:8117";
 
 /* Pool server host to instruct your miners to point to.  */
-var poolHost = "poolhost.com";
+let poolHost = "poolhost.com";
 
 /* IRC Server and room used for embedded KiwiIRC chat. */
-var irc = "irc.freenode.net/#forknote";
+let irc = "irc.freenode.net/#forknote";
 
 /* Contact email address. */
-var email = "support@poolhost.com";
+let email = "support@poolhost.com";
 
 /* Market stat display params from https://www.cryptonator.com/widget */
-var cryptonatorWidget = ["DSH-BTC", "DSH-USD", "DSH-EUR"];
+let cryptonatorWidget = ["DSH-BTC", "DSH-USD", "DSH-EUR"];
 
 /* Download link to cryptonote-easy-miner for Windows users. */
-var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
+let easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
 
 /* Used for front-end block links. */
-var blockchainExplorer = "http://chainradar.com/{symbol}/block/{id}";
+let blockchainExplorer = "http://chainradar.com/{symbol}/block/{id}";
 
 /* Used by front-end transaction links. */
-var transactionExplorer = "http://chainradar.com/{symbol}/transaction/{id}";
+let transactionExplorer = "http://chainradar.com/{symbol}/transaction/{id}";
 
 /* Any custom CSS theme for pool frontend */
-var themeCss = "themes/default-theme.css";
+let themeCss = "themes/default-theme.css";
 
 ```
 
@@ -558,15 +558,15 @@ enable-cors=*
 * Change the following line in the pool's frontend config.js:
 
 ```
-var api_blockexplorer = "http://daemonhost.com:1118";
+let api_blockexplorer = "http://daemonhost.com:1118";
 ```
 
 * Finally, edit these variables in the pool's frontend config.js using this syntax:
 
 ```
-var blockchainExplorer = 'http://poolhost/?hash={id}#blockchain_block'
+let blockchainExplorer = 'http://poolhost/?hash={id}#blockchain_block'
 
-var transactionExplorer = 'http://poolhost/?hash={id}#blockchain_transaction'
+let transactionExplorer = 'http://poolhost/?hash={id}#blockchain_transaction'
 ```
 
 Credits

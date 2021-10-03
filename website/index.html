@@ -86,13 +86,13 @@
 <script>
 
 
-    var docCookies = {
+    let docCookies = {
         getItem: function (sKey) {
             return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
         },
         setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
             if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-            var sExpires = "";
+            let sExpires = "";
             if (vEnd) {
                 switch (vEnd.constructor) {
                     case Number:
@@ -124,23 +124,23 @@
     }
     
     $.fn.update = function(txt){
-        var el = this[0];
+        let el = this[0];
         if (el.textContent !== txt)
             el.textContent = txt;
         return this;
     };
 
     function updateTextClasses(className, text){
-        var els = document.getElementsByClassName(className);
-        for (var i = 0; i < els.length; i++){
-            var el = els[i];
+        let els = document.getElementsByClassName(className);
+        for (let i = 0; i < els.length; i++){
+            let el = els[i];
             if (el.textContent !== text)
                 el.textContent = text;
         }
     }
 
     function updateText(elementId, text){
-        var el = document.getElementById(elementId);
+        let el = document.getElementById(elementId);
         if (el.textContent !== text){
             el.textContent = text;
         }
@@ -148,20 +148,20 @@
     }
 
     function updateTextLinkable(elementId, text){
-        var el = document.getElementById(elementId);
+        let el = document.getElementById(elementId);
         if (el.innerHTML !== text){
             el.innerHTML = text;
         }
         return el;
     }
 
-    var currentPage;
-    var lastStats;
+    let currentPage;
+    let lastStats;
 
 
     function getReadableHashRateString(hashrate){
-        var i = 0;
-        var byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
+        let i = 0;
+        let byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
         while (hashrate > 1000){
             hashrate = hashrate / 1000;
             i++;
@@ -174,7 +174,7 @@
     }
 
     function getReadableCoins(coins, digits, withoutSymbol){
-        var amount = (parseInt(coins || 0) / lastStats.config.coinUnits).toFixed(digits || lastStats.config.coinUnits.toString().length - 1);
+        let amount = (parseInt(coins || 0) / lastStats.config.coinUnits).toFixed(digits || lastStats.config.coinUnits.toString().length - 1);
         return amount + (withoutSymbol ? '' : (' ' + lastStats.config.symbol));
     }
 
@@ -189,7 +189,7 @@
 
     function getPaymentRowElement(payment, jsonString){
 
-        var row = document.createElement('tr');
+        let row = document.createElement('tr');
         row.setAttribute('data-json', jsonString);
         row.setAttribute('data-time', payment.time);
         row.setAttribute('id', 'paymentRow' + payment.time);
@@ -201,7 +201,7 @@
 
 
     function parsePayment(time, serializedPayment){
-        var parts = serializedPayment.split(':');
+        let parts = serializedPayment.split(':');
         return {
             time: parseInt(time),
             hash: parts[0],
@@ -214,27 +214,27 @@
 
     function renderPayments(paymentsResults){
 
-        var $paymentsRows = $('#payments_rows');
+        let $paymentsRows = $('#payments_rows');
 
-        for (var i = 0; i < paymentsResults.length; i += 2){
+        for (let i = 0; i < paymentsResults.length; i += 2){
 
-            var payment = parsePayment(paymentsResults[i + 1], paymentsResults[i]);
+            let payment = parsePayment(paymentsResults[i + 1], paymentsResults[i]);
 
-            var paymentJson = JSON.stringify(payment);
+            let paymentJson = JSON.stringify(payment);
 
-            var existingRow = document.getElementById('paymentRow' + payment.time);
+            let existingRow = document.getElementById('paymentRow' + payment.time);
 
             if (existingRow && existingRow.getAttribute('data-json') !== paymentJson){
                 $(existingRow).replaceWith(getPaymentRowElement(payment, paymentJson));
             }
             else if (!existingRow){
 
-                var paymentElement = getPaymentRowElement(payment, paymentJson);
+                let paymentElement = getPaymentRowElement(payment, paymentJson);
 
-                var inserted = false;
-                var rows = $paymentsRows.children().get();
-                for (var f = 0; f < rows.length; f++) {
-                    var pTime = parseInt(rows[f].getAttribute('data-time'));
+                let inserted = false;
+                let rows = $paymentsRows.children().get();
+                for (let f = 0; f < rows.length; f++) {
+                    let pTime = parseInt(rows[f].getAttribute('data-time'));
                     if (pTime < payment.time){
                         inserted = true;
                         $(rows[f]).before(paymentElement);
@@ -249,7 +249,7 @@
     }
 
     function pulseLiveUpdate(){
-        var stats_update = document.getElementById('stats_updated');
+        let stats_update = document.getElementById('stats_updated');
         stats_update.style.transition = 'opacity 100ms ease-out';
         stats_update.style.opacity = 1;
         setTimeout(function(){
@@ -283,7 +283,7 @@
     }
 
 
-    var xhrPageLoading;
+    let xhrPageLoading;
     function routePage(loadedCallback) {
 
         if (currentPage) currentPage.destroy();
@@ -294,10 +294,10 @@
             xhrPageLoading.abort();
 
         $('.hot_link').parent().removeClass('active');
-        var $link = $('a.hot_link[href="' + (window.location.hash || '#') + '"]');
+        let $link = $('a.hot_link[href="' + (window.location.hash || '#') + '"]');
 
         $link.parent().addClass('active');
-        var page = $link.data('page');
+        let page = $link.data('page');
 
         xhrPageLoading = $.ajax({
             url: 'pages/' + page,
@@ -314,7 +314,7 @@
 
     function updateIndex(){
         updateText('coinName', lastStats.config.coin);
-        var title = $(".navbar-brand").text();
+        let title = $(".navbar-brand").text();
         $("title").text(title.charAt(0).toUpperCase() + title.slice(1));
         updateText('poolVersion', lastStats.config.version);
     }
@@ -335,7 +335,7 @@
 
     // Blockexplorer functions
     urlParam = function(name){
-        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results==null){
            return null;
         }

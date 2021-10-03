@@ -6,18 +6,18 @@ used in v0.99.1+
 
 */
 
-var util = require('util')
+let util = require('util')
 
-var async = require('async')
+let async = require('async')
 
-var redis = require('redis')
+let redis = require('redis')
 
 require('./lib/configReader.js')
 
-var apiInterfaces = require('./lib/apiInterfaces.js')(global.config.daemon, global.config.wallet)
+let apiInterfaces = require('./lib/apiInterfaces.js')(global.config.daemon, global.config.wallet)
 
 function log (severity, system, text, data) {
-  var formattedMessage = text
+  let formattedMessage = text
 
   if (data) {
     data.unshift(text)
@@ -27,9 +27,9 @@ function log (severity, system, text, data) {
   console.log(severity + ': ' + formattedMessage)
 }
 
-var logSystem = 'reward script'
+let logSystem = 'reward script'
 
-var redisClient = redis.createClient(global.config.redis.port, global.config.redis.host)
+let redisClient = redis.createClient(global.config.redis.port, global.config.redis.host)
 
 function getTotalShares (height, callback) {
   redisClient.hgetall(global.config.coin + ':shares:round' + height, function (err, workerShares) {
@@ -38,7 +38,7 @@ function getTotalShares (height, callback) {
       return
     }
 
-    var totalShares = Object.keys(workerShares).reduce(function (p, c) {
+    let totalShares = Object.keys(workerShares).reduce(function (p, c) {
       return p + parseInt(workerShares[c])
     }, 0)
 
@@ -60,8 +60,8 @@ async.series([
         return
       }
 
-      var blocks = result.map(function (item) {
-        var parts = item.split(':')
+      let blocks = result.map(function (item) {
+        let parts = item.split(':')
         return {
           height: parseInt(parts[0]),
           difficulty: parts[1],
@@ -84,7 +84,7 @@ async.series([
             mapCback(null, block)
             return
           }
-          var blockHeader = result.block_header
+          let blockHeader = result.block_header
           block.reward = blockHeader.reward
           mapCback(null, block)
         })
@@ -95,10 +95,10 @@ async.series([
           return
         }
 
-        var zaddCommands = [global.config.coin + ':blocks:matured']
+        let zaddCommands = [global.config.coin + ':blocks:matured']
 
-        for (var i = 0; i < blocks.length; i++) {
-          var block = blocks[i]
+        for (let i = 0; i < blocks.length; i++) {
+          let block = blocks[i]
           zaddCommands.push(block.height)
           zaddCommands.push([
             block.hash,
@@ -136,8 +136,8 @@ async.series([
       }
 
       async.map(result, function (item, mapCback) {
-        var parts = item.split(':')
-        var block = {
+        let parts = item.split(':')
+        let block = {
           height: parseInt(parts[0]),
           difficulty: parts[1],
           hash: parts[2],
@@ -151,10 +151,10 @@ async.series([
         })
       }, function (err, blocks) {
         log('error', logSystem, 'some kind of error occured %s', [err])
-        var zaddCommands = [global.config.coin + ':blocks:candidates']
+        let zaddCommands = [global.config.coin + ':blocks:candidates']
 
-        for (var i = 0; i < blocks.length; i++) {
-          var block = blocks[i]
+        for (let i = 0; i < blocks.length; i++) {
+          let block = blocks[i]
           zaddCommands.push(block.height)
           zaddCommands.push([
             block.hash,

@@ -49,7 +49,7 @@
 </div>
 
 <script>
-    var block, xhrGetBlock;
+    let block, xhrGetBlock;
 
     currentPage = {
         destroy: function(){
@@ -110,7 +110,7 @@
 
     function getTransactionRowElement(transaction, jsonString){
 
-        var row = document.createElement('tr');
+        let row = document.createElement('tr');
         row.setAttribute('data-json', jsonString);
         row.setAttribute('data-hash', transaction.hash);
         row.setAttribute('id', 'transactionRow' + transaction.hash);
@@ -122,22 +122,22 @@
 
     function renderTransactions(transactionResults){
 
-        var $transactionsRows = $('#transactions_rows');
+        let $transactionsRows = $('#transactions_rows');
 
-        for (var i = 0; i < transactionResults.length; i++){
+        for (let i = 0; i < transactionResults.length; i++){
 
-            var transaction = transactionResults[i];
+            let transaction = transactionResults[i];
 
-            var transactionJson = JSON.stringify(transaction);
+            let transactionJson = JSON.stringify(transaction);
 
-            var existingRow = document.getElementById('transactionRow' + transaction.hash);
+            let existingRow = document.getElementById('transactionRow' + transaction.hash);
 
             if (existingRow && existingRow.getAttribute('data-json') !== transactionJson){
                 $(existingRow).replaceWith(getTransactionRowElement(transaction, transactionJson));
             }
             else if (!existingRow){
 
-                var transactionElement = getTransactionRowElement(transaction, transactionJson);
+                let transactionElement = getTransactionRowElement(transaction, transactionJson);
                 $transactionsRows.append(transactionElement);
             }
 

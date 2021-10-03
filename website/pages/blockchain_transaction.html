@@ -138,7 +138,7 @@
 </div>
 
 <script>
-    var xhrGetTransaction;
+    let xhrGetTransaction;
 
     currentPage = {
         destroy: function(){
@@ -202,7 +202,7 @@
 
     function getInputRowElement(input, jsonString){
 
-        var row = document.createElement('tr');
+        let row = document.createElement('tr');
         row.setAttribute('data-json', jsonString);
         row.setAttribute('data-k_image', input.value.k_image);
         row.setAttribute('id', 'inputRow' + input.value.k_image);
@@ -214,24 +214,24 @@
 
     function renderInputs(inputResults){
 
-        var $inputsRows = $('#inputs_rows');
+        let $inputsRows = $('#inputs_rows');
 
-        for (var i = 0; i < inputResults.length; i++){
+        for (let i = 0; i < inputResults.length; i++){
 
-            var input = inputResults[i];
+            let input = inputResults[i];
             if (!input.value.amount)
                 continue;
 
-            var inputJson = JSON.stringify(input);
+            let inputJson = JSON.stringify(input);
 
-            var existingRow = document.getElementById('inputRow' + input.value.k_image);
+            let existingRow = document.getElementById('inputRow' + input.value.k_image);
 
             if (existingRow && existingRow.getAttribute('data-json') !== inputJson){
                 $(existingRow).replaceWith(getInputRowElement(input, inputJson));
             }
             else if (!existingRow){
 
-                var inputElement = getInputRowElement(input, inputJson);
+                let inputElement = getInputRowElement(input, inputJson);
                 $inputsRows.append(inputElement);
             }
 
@@ -247,7 +247,7 @@
 
     function getOutputRowElement(output, jsonString){
 
-        var row = document.createElement('tr');
+        let row = document.createElement('tr');
         row.setAttribute('data-json', jsonString);
         row.setAttribute('data-k_image', output.target.data.key);
         row.setAttribute('id', 'outputRow' + output.target.data.key);
@@ -259,22 +259,22 @@
 
     function renderOutputs(outputResults){
 
-        var $outputsRows = $('#outputs_rows');
+        let $outputsRows = $('#outputs_rows');
 
-        for (var i = 0; i < outputResults.length; i++){
+        for (let i = 0; i < outputResults.length; i++){
 
-            var output = outputResults[i];
+            let output = outputResults[i];
 
-            var outputJson = JSON.stringify(output);
+            let outputJson = JSON.stringify(output);
 
-            var existingRow = document.getElementById('outputRow' + output.target.data.key);
+            let existingRow = document.getElementById('outputRow' + output.target.data.key);
 
             if (existingRow && existingRow.getAttribute('data-json') !== outputJson){
                 $(existingRow).replaceWith(getOutputRowElement(output, outputJson));
             }
             else if (!existingRow){
 
-                var outputElement = getOutputRowElement(output, outputJson);
+                let outputElement = getOutputRowElement(output, outputJson);
                 $outputsRows.append(outputElement);
             }
 

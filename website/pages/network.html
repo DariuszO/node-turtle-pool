@@ -32,7 +32,7 @@
             updateText('network-symbol', lastStats.config.symbol);
         },
         update: function(){
-            const NETWORK_STAT_MAP = new Map(networkStat[lastStats.config.symbol.toLowerCase()]);
+            let NETWORK_STAT_MAP = new Map(networkStat[lastStats.config.symbol.toLowerCase()]);
             NETWORK_STAT_MAP.forEach((url, host, map) => {
                 $.getJSON(url + '/stats', (data, textStatus, jqXHR) => {
                     updateText('height-'+host, data.network.height);
@@ -45,7 +45,7 @@
         }
     };
 
-    const NETWORK_STAT_MAP = new Map(networkStat[lastStats.config.symbol.toLowerCase()]);
+    let NETWORK_STAT_MAP = new Map(networkStat[lastStats.config.symbol.toLowerCase()]);
     NETWORK_STAT_MAP.forEach((url, host, map) => {
         $.getJSON(url + '/stats', (data, textStatus, jqXHR) => {
             $('#network_rows').append('<tr>' +
